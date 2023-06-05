@@ -1,0 +1,101 @@
+{{ partial "mobile.html" .}}
+
+<div id="left-sidebar" class="d-flex flex-column left-sidebar show">
+
+  <div id="navTitle" class="title">
+    <a aria-label="{{ .Site.Title }}" href="{{ .Site.BaseURL }}">
+      <span aria-hidden="true">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path fill-rule="evenodd" clip-rule="evenodd" d="M3 0C3.82965 0 4.5 0.670303 4.5 1.5V2.25L7.73438 1.43907C9.52039 0.993759 11.4093 1.2 13.0547 2.02501C15.225 3.1125 17.7797 3.1125 19.9501 2.02501L20.4 1.8C21.3657 1.31719 22.5 2.02032 22.5 3.09844V14.7047C22.5 15.3328 22.1109 15.8906 21.525 16.1109L19.8984 16.7203C17.7328 17.5359 15.3281 17.4094 13.2563 16.3734C11.4796 15.4875 9.44055 15.2625 7.5141 15.7453L4.5 16.5V22.5C4.5 23.3297 3.82965 24 3 24C2.17035 24 1.5 23.3297 1.5 22.5V1.5C1.5 0.670303 2.17035 0 3 0ZM7.07812 11.6222H13.4731C13.7823 11.0491 13.3852 10.2159 12.6749 10.2159H10.4918L13.5082 4.99168C13.7016 4.6577 13.589 4.22527 13.2515 4.03191C12.9175 3.83855 12.4852 3.95105 12.2919 4.28856L11.9789 4.82996L11.666 4.28856C11.4727 3.95457 11.0438 3.83855 10.7062 4.03191C10.3722 4.22527 10.2563 4.65417 10.4496 4.99168L11.1703 6.23621L8.87109 10.2159H7.07812C6.69141 10.2159 6.375 10.5323 6.375 10.919C6.375 11.3058 6.69141 11.6222 7.07812 11.6222ZM7.63 13.7737C7.96399 13.9671 8.39648 13.8546 8.58984 13.5171L9.26843 12.3464C8.90625 11.9069 8.44226 11.7733 7.8761 11.9456L7.37347 12.8139C7.18011 13.1479 7.29254 13.5804 7.63 13.7737ZM16.9219 11.6222H15.9023L16.5914 12.8139C16.7847 13.1515 16.6688 13.5804 16.3348 13.7737C15.9972 13.9671 15.5684 13.8511 15.375 13.5171C14.859 12.6248 14.4011 11.8311 14.0006 11.137C13.5035 10.275 13.0948 9.56662 12.7734 9.01355C12.1864 7.99402 12.6046 6.97449 13.023 6.62997L13.6137 7.65385C14.0134 8.34631 14.5063 9.20034 15.0938 10.2159H16.9219C17.3086 10.2159 17.625 10.5323 17.625 10.919C17.625 11.3093 17.3086 11.6222 16.9219 11.6222Z"/>
+        </svg>
+      </span>
+    </a>
+    <div>
+      <p class="mb-0 fw-semibold large hidden-text">{{ .Site.Params.reportTitle }}</p>
+      <p class="mb-0 small hidden-text">{{ .Site.Params.reportSubtitle }}</p>
+    </div>
+  </div>
+
+  <hr>
+
+  <button id="theme-toggle" class="themetoggle" aria-label="Toggle Dark Theme">
+    <span class="moon" aria-hidden="true">{{ partial "fontawesome.html" "regular/moon" }}</span> <span class="sun" aria-hidden="true">{{ partial "fontawesome.html" "regular/sun-bright" }}</span><span class="hidden-text moon">Dark Theme</span><span class="hidden-text sun">Light Theme</span>
+  </button>
+
+  <button id="toc-toggle" class="toctoggle" aria-label="Collapse Table of Contents">
+    <span class="close" aria-hidden="true">{{ partial "fontawesome.html" "solid/arrow-left-to-line" }}</span> <span class="open" aria-hidden="true">{{ partial "fontawesome.html" "solid/arrow-right-from-line" }}</span> <span class="hidden-text">Collapse Table
+    of Contents</span>
+  </button>
+
+  <script>
+    let theme = localStorage.getItem("data-theme");
+    const themeToggle = document.querySelector("#theme-toggle");
+    const mobileToggle = document.querySelector("#mobile-toggle");
+
+    const changeThemeToDark = () => {
+      document.documentElement.setAttribute("data-theme", "dark");
+      localStorage.setItem("data-theme", "dark");
+    };
+
+    const changeThemeToLight = () => {
+      document.documentElement.setAttribute("data-theme", "light");
+      localStorage.setItem("data-theme", "light");
+    };
+
+    if (theme === "dark") {
+      changeThemeToDark();
+    }
+
+    themeToggle.addEventListener("click", () => {
+      let theme = localStorage.getItem("data-theme");
+      if (theme === "dark") {
+        changeThemeToLight();
+      } else {
+        changeThemeToDark();
+      }
+    });
+
+    mobileToggle.addEventListener("click", () => {
+      let theme = localStorage.getItem("data-theme");
+      if (theme === "dark") {
+        changeThemeToLight();
+      } else {
+        changeThemeToDark();
+      }
+    });
+  </script>
+
+  {{ partial "menu.html" . }}
+
+  <a aria-label="Go to {{ .Site.Title }} website" class="navbar-brand mt-auto mb-4 pt-4" href="https://applecensorship.com" target="
+  _blank" rel="noopener noreferrer">
+    {{ partial "logo" }}
+  </a>
+</div>
+
+<script>
+  document.addEventListener("DOMContentLoaded", function (event) {
+    const showNavbar = (toggleId, sidebarId, navId, bodyId) => {
+      const toggle = document.getElementById(toggleId),
+        sidebar = document.getElementById(sidebarId),
+        nav = document.getElementById(navId),
+        bodypd = document.getElementById(bodyId);
+
+      // Validate that all variables exist
+      if (toggle && sidebar && nav && bodypd ) {
+        toggle.addEventListener("click", () => {
+          // show navbar
+          nav.classList.toggle("show");
+          // show navbar
+          sidebar.classList.toggle("show");
+          // change icon
+          toggle.classList.toggle("bx-x");
+          // add padding to body
+          bodypd.classList.toggle("body-pd");
+        });
+      }
+    };
+
+    showNavbar("toc-toggle", "left-sidebar", "nav-bar", "body-pd");
+  });
+</script>
